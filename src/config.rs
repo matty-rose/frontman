@@ -13,5 +13,5 @@ pub struct FrontmanConfig {
 #[allow(dead_code)]
 #[derive(Deserialize, Debug)]
 pub struct Origin {
-    uri: String,
+    host: String,
 }
