@@ -11,7 +11,9 @@ license = "MIT"
 [dependencies]
 axum = "0.5.16"
 hyper = { version = "0.14.20", features = ["full"] }
+serde = { version = "1.0.145", features = ["serde_derive"] }
 tokio = { version = "1.21.2", features = ["full"] }
+toml = "0.5.9"
 tower = "0.4.13"
 tower-http = { version = "0.3.4", features = ["trace"] }
 tracing = "0.1.36"

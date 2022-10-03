@@ -1,0 +1,4 @@
+[frontman]
+origins = [
+    { uri = "8.8.8.8" },
+]
