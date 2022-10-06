@@ -2,6 +2,9 @@
 
 ## TODO
 - [ ] Read/parse proxy config from file?
-- [ ] Load balance requests to 1 or more origin servers, supporting IP/DNS
+- [ ] Load balance requests to 1 or more origin servers (of the same backend), supporting IP/DNS
+- [ ] docker-compose setup/example
+- [ ] local k8s setup/example
 - [ ] Persist specific origin server (by name?) for requests through cookies (if enabled in config?)
 - [ ] Load/perf testing
+- [ ] add origin groups (ie load balance to two different services/backends, each with their own group of 1 or more servers) with path based routing
