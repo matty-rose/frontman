@@ -1,0 +1,63 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: frontman-config
+data:
+  frontman.toml: |
+    [frontman]
+    origins = [
+        { host = "origin-1", port = 9999 },
+        { host = "origin-2", port = 9999 },
+    ]
+    timeout = 2
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontman
+  labels:
+    app: frontman
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: frontman
+  template:
+    metadata:
+      labels:
+        app: frontman
+    spec:
+      containers:
+        - image: frontman:latest
+          imagePullPolicy: Never
+          name: frontman
+          args: 
+            - --config-path 
+            - .config/frontman.toml
+          ports:
+            - containerPort: 3000
+          resources: {}
+          volumeMounts:
+            - mountPath: /.config
+              name: frontman-config
+      restartPolicy: Always
+      volumes:
+        - name: frontman-config
+          configMap:
+            name: frontman-config
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontman
+  labels:
+    app: frontman
+spec:
+  type: NodePort
+  ports:
+    - name: "3000"
+      port: 3000
+      targetPort: 3000
+      nodePort: 30000
+  selector:
+    app: frontman

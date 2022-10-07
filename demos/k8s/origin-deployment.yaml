@@ -1,0 +1,81 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: origin-1
+  labels:
+    app: origin-1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: origin-1
+  template:
+    metadata:
+      labels:
+        app: origin-1
+    spec:
+      containers:
+        - image: origin:latest
+          name: origin-1
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 9999
+          resources: {}
+      restartPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: origin-1
+  labels:
+    app: origin-1
+spec:
+  type: NodePort
+  ports:
+    - name: "9999"
+      port: 9999
+      targetPort: 9999
+      nodePort: 30001
+  selector:
+    app: origin-1
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: origin-2
+  labels:
+    app: origin-2
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: origin-2
+  template:
+    metadata:
+      labels:
+        app: origin-2
+    spec:
+      containers:
+        - image: origin:latest
+          name: origin-2
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 9999
+          resources: {}
+      restartPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: origin-2
+  labels:
+    app: origin-2
+spec:
+  type: NodePort
+  ports:
+    - name: "9999"
+      port: 9999
+      targetPort: 9999
+      nodePort: 30002
+  selector:
+    app: origin-2
