@@ -1,6 +1,7 @@
 #![feature(async_closure)]
 use std::net::SocketAddr;
 
+use anyhow::Result;
 use axum::{routing::any, Router};
 use clap::Parser;
 use tower_http::trace::TraceLayer;
@@ -11,7 +12,7 @@ mod config;
 mod proxy;
 
 #[tokio::main]
-async fn main() {
+async fn main() -> Result<()> {
     let args = args::ServerArgs::parse();
 
     tracing_subscriber::registry()
@@ -34,9 +35,9 @@ async fn main() {
 
     let proxy = proxy::Proxy::new(config);
 
-    let handler = async move |path| match proxy.handler(path).await {
+    let handler = async move |path, method| match proxy.handler(path, method).await {
         Ok(response) => response,
-        Err(_) => "error".to_owned(),
+        Err(e) => e.to_string(),
     };
 
     let app = Router::new()
@@ -49,4 +50,6 @@ async fn main() {
         .serve(app.into_make_service())
         .await
         .unwrap();
+
+    Ok(())
 }

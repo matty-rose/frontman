@@ -8,11 +8,12 @@ pub struct Config {
 #[derive(Deserialize, Debug, Clone)]
 pub struct FrontmanConfig {
     pub origins: Vec<Origin>,
+    pub timeout: u64,
 }
 
 #[allow(dead_code)]
 #[derive(Deserialize, Debug, Clone)]
 pub struct Origin {
-    host: String,
-    port: usize,
+    pub host: String,
+    pub port: usize,
 }
