@@ -1,0 +1,21 @@
+version: "3.10"
+
+services:
+
+  frontman:
+    build:
+      dockerfile: docker/frontman.Dockerfile
+      context: ../../
+    image: frontman
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./demo.toml:/frontman.toml:ro
+
+  origin-1:
+    build:
+      dockerfile: docker/origin.Dockerfile
+      context: ../../
+    image: origin
+    ports:
+      - "9999:9999"

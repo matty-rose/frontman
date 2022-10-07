@@ -1,9 +1,10 @@
 FROM golang:1.18 AS build
+ENV BASE_DIR=demos/origin
 WORKDIR /go/src/github.com/matty-rose/frontman/demos/origin
-COPY go.mod .
-COPY go.sum .
+COPY ${BASE_DIR}/go.mod .
+COPY ${BASE_DIR}/go.sum .
 RUN go mod download && go mod verify
-COPY main.go main.go
+COPY ${BASE_DIR}/main.go main.go
 RUN CGO_ENABLED=0 GOOS=linux go build -a -o bin/app main.go
 
 
