@@ -1,7 +1,8 @@
 # Frontman
 
 ## TODO
-- [ ] Read/parse proxy config from file?
+- [x] Read/parse proxy config from file?
+- [x] Server CLI args (config file path, listening port etc)
 - [ ] Load balance requests to 1 or more origin servers (of the same backend), supporting IP/DNS
 - [ ] Anyhow for result?
 - [ ] proper error responses
