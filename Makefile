@@ -8,7 +8,7 @@ help:
 	@grep -E \
 		'^.PHONY: .*?## .*$$' $(MAKEFILE_LIST) | \
 		sort | \
-		awk 'BEGIN {FS = ".PHONY: |## "}; {printf "\033[36m%-16s\033[0m %s\n", $$2, $$3}'
+		awk 'BEGIN {FS = ".PHONY: |## "}; {printf "\033[36m%-16s\033[0m \t\t%s\n", $$2, $$3}'
 
 .PHONY: frontman/docker ## Builds the frontman docker image
 frontman/docker:
@@ -27,7 +27,7 @@ cluster/load-images:
 	kind load docker-image frontman --name frontman
 	kind load docker-image origin --name frontman
 
-.PHONY: cluster/deploy
+.PHONY: cluster/deploy ## Deploys frontman and origin servers to k8s cluster
 cluster/deploy:
 	kubectl apply -f demos/k8s/origin-deployment.yaml
 	kubectl apply -f demos/k8s/frontman-deployment.yaml

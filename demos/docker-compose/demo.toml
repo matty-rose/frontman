@@ -1,5 +1,6 @@
 [frontman]
 origins = [
     { host = "origin-1", port = 9999 },
+    { host = "origin-2", port = 9999 },
 ]
 timeout = 2

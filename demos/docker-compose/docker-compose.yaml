@@ -19,3 +19,11 @@ services:
     image: origin
     ports:
       - "9999:9999"
+
+  origin-2:
+    build:
+      dockerfile: docker/origin.Dockerfile
+      context: ../../
+    image: origin
+    ports:
+      - "10000:9999"
