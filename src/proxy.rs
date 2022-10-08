@@ -3,7 +3,7 @@ use std::time::Duration;
 use rand::seq::SliceRandom;
 
 use crate::config::Config;
-use anyhow::{Error, Result};
+use anyhow::Result;
 use axum::{extract::Path, http};
 use reqwest::Client;
 
@@ -23,11 +23,7 @@ impl Proxy {
         Self { config, client }
     }
 
-    pub async fn handler(
-        &self,
-        Path(path): Path<String>,
-        method: http::Method,
-    ) -> Result<String, Error> {
+    pub async fn handler(&self, Path(path): Path<String>, method: http::Method) -> Result<String> {
         let origin = self.get_origin();
         tracing::info!(
             "forwarding {} request to path {} to this server: {}",
@@ -40,13 +36,12 @@ impl Proxy {
             .client
             .request(method, format!("{}{}", origin, path))
             .send()
-            .await;
+            .await?
+            .text()
+            .await?;
         tracing::info!("{:?}", resp);
 
-        match resp {
-            Ok(resp) => Ok(resp.text().await?),
-            Err(e) => Err(anyhow::anyhow!("couldn't send request to origin: {}", e)),
-        }
+        Ok(resp)
     }
 
     fn get_origin(&self) -> String {
