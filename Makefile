@@ -16,7 +16,7 @@ frontman/docker:
 
 .PHONY: origin/docker ## Builds the demo origin server docker image
 origin/docker:
-	docker build demos/origin -f docker/origin.Dockerfile -t origin
+	docker build . -f docker/origin.Dockerfile -t origin
 
 .PHONY: cluster/up ## Creates a local kubernetes cluster with kind
 cluster/up:

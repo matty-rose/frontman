@@ -13,3 +13,5 @@ make cluster/up
 make cluster/load-images
 make cluster/deploy
 ```
+
+The two origin server services will be available at `localhost:30001` and `localhost:30002` while `frontman` will be available at `localhost:30000`
